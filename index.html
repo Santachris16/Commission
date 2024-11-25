@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Christian Santamaria">
+    <title>Weekly Commission Report</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        let subtotal = 0;
+        let input;
+
+        // Input Phase
+        do {
+            input = prompt("Enter sale amount or type 'Done' to finish:");
+            if (input === null) continue; // Handle cancel
+            input = input.trim();
+
+            if (input.toLowerCase() === "done") break;
+
+            let sale = parseFloat(input);
+            if (isNaN(sale) || sale < 0) {
+                alert("Please enter a valid positive number.");
+                continue;
+            }
+
+            subtotal += sale;
+        } while (true);
+
+        // Calculate Commission Rate
+        let commissionRate = 0;
+        if (subtotal > 0 && subtotal <= 499.99) {
+            commissionRate = 5;
+        } else if (subtotal >= 500 && subtotal <= 999.99) {
+            commissionRate = 10;
+        } else if (subtotal >= 1000) {
+            commissionRate = 15;
+        }
+
+        let commission = (subtotal * commissionRate) / 100;
+        let totalEarnings = subtotal + commission;
+
+        // Format Output
+        const formatCurrency = amount => `$${amount.toFixed(2)}`;
+        const formatPercentage = rate => `${rate.toFixed(2)}%`;
+
+        // Output Phase
+        document.write(`
+            <h1>Hello, Here is your Weekly Commission Report.</h1>
+            <p>Your sales total is ${formatCurrency(subtotal)}, so your commission rate is ${formatPercentage(commissionRate)}.</p>
+            <p>Your total commission is ${formatCurrency(commission)}.</p>
+            <p>Your total earnings are ${formatCurrency(totalEarnings)}.</p>
+        `);
+    </script>
+</body>
+</html>
